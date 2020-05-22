@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class Tile {
+class Node {
   private:
     // 0 green
     // 1 pink
@@ -20,7 +20,7 @@ class Tile {
     // uuid
     int id;
     // connections to other tiles
-    vector<Tile*> connections;
+    vector<Node*> connections;
 
   public:
 };
@@ -30,9 +30,9 @@ int rng() {
 }
 
 int main() {
+  // init random number generation
   srand(time(NULL));
-  while(1) {
-    cout << rng() << endl;
-  }
+
+  
   return 0;
 }
