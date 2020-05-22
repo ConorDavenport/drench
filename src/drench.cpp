@@ -26,11 +26,13 @@ class Tile {
 };
 
 int rng() {
-  srand(time(NULL));
   return rand() % 6 + 0;
 }
 
 int main() {
-  cout << rng();
+  srand(time(NULL));
+  while(1) {
+    cout << rng() << endl;
+  }
   return 0;
 }
