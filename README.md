@@ -30,3 +30,6 @@ The player then selects green, and the two green sections adjacent to the
 player object are now included in the player object.
 
 ![alt text](https://github.com/ConorDavenport/drench/blob/master/media/move4.png)
+
+The player must fill the entire grid with a single colour in fewer than 30
+moves.
