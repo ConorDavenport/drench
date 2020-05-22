@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#define GRID_SIZE 14
+
 class Node {
   private:
     // 0 green
@@ -33,6 +35,18 @@ int main() {
   // init random number generation
   srand(time(NULL));
 
+  // represents the grid of tiles
+  int grid[GRID_SIZE][GRID_SIZE] = {};
+
+  // fill grid with random numbers (colours)
+  for (int i = 0; i < GRID_SIZE; i++) {
+    for (int j = 0; j < GRID_SIZE; j++) {
+      grid[i][j] = rng();
+      cout << grid[i][j];
+    }
+    cout << endl;
+  }
+  
   
   return 0;
 }
