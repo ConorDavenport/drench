@@ -78,14 +78,20 @@ void Grid::search() {
       adjacent[2] = &grid[i+1][j];
       adjacent[3] = &grid[i][j+1];
 
+      Node n;
+      n.colour = 6;
+      n.id = 200;
+      Node* ptr;
+      ptr = &n;
+
       if (i == 0) {
-
+        adjacent[0] = ptr;
       } if (i == (GRID - 1)) {
-
+        adjacent[2] = ptr;
       } if (j == 0) {
-
+        adjacent[1] = ptr;
       } if (j == (GRID - 1)) {
-        
+        adjacent[3] = ptr;
       }
     }
   }
