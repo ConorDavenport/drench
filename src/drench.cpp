@@ -25,6 +25,7 @@ class Node {
     vector<Node*> connections;
 };
 
+
 int rng() {
   return rand() % 6 + 0;
 }
@@ -36,6 +37,7 @@ class Grid {
 
     Grid();
     void print();
+    void search();
 };
 
 Grid::Grid() {
@@ -50,9 +52,42 @@ Grid::Grid() {
 void Grid::print() {
   for (int i = 0; i < GRID; i ++) {
     for (int j = 0; j < GRID; j++) {
-      cout << grid[i][j].colour;
+      cout << grid[i][j].id << " ";
     }
     cout << endl;
+  }
+}
+
+void Grid::search() {
+  for (int i = 0; i < GRID; i ++) {
+    for (int j = 0; j < GRID; j++) {
+      Node thisNode = grid[i][j];
+
+      //      ┌───┐	  
+      //      │ 1 │
+      //  ┌───┼───┼───┐
+      //  │ 0 │ x │ 2 │
+      //  └───┼───┼───┘
+      //      │ 3 │
+      //      └───┘ 	
+
+      Node* adjacent[4];
+      
+      adjacent[0] = &grid[i-1][j];
+      adjacent[1] = &grid[i][j-1];
+      adjacent[2] = &grid[i+1][j];
+      adjacent[3] = &grid[i][j+1];
+
+      if (i == 0) {
+
+      } if (i == (GRID - 1)) {
+
+      } if (j == 0) {
+
+      } if (j == (GRID - 1)) {
+        
+      }
+    }
   }
 }
 
@@ -61,5 +96,7 @@ int main() {
   srand(time(NULL));
 
   Grid g;
+  g.search();
+  //g.print();
   return 0;
 }
