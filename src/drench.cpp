@@ -29,21 +29,28 @@ int rng() {
   return rand() % 6 + 0;
 }
 
-int main() {
-  // init random number generation
-  srand(time(NULL));
+class Grid {
+  public:
+    Node grid[GRID][GRID] = {};
+    vector<Node> network = {};
 
-  // represents the grid of tiles
-  Node grid[GRID][GRID] = {};
+    Grid();
+};
 
-  // initialise grid tiles with uuid's and random colours
+Grid::Grid() {
   for (int i = 0; i < GRID; i ++) {
     for (int j = 0; j < GRID; j++) {
       grid[i][j].id = ((i * GRID) + j);
       grid[i][j].colour = rng();
     }
   }
-  
+}
+
+int main() {
+  // init random number generation
+  srand(time(NULL));
+
+  Grid g();
   
   return 0;
 }
