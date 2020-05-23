@@ -17,8 +17,8 @@ class Node {
     // 4 red
     // 5 yellow
     int colour;
-    // number of tiles in that block
-    int volume;
+    // pointers to other tiles in that block
+    vector<Node*> siblings;
     // uuid
     int id;
     // connections to other tiles
@@ -35,6 +35,7 @@ class Grid {
     vector<Node> network = {};
 
     Grid();
+    void print();
 };
 
 Grid::Grid() {
@@ -46,11 +47,19 @@ Grid::Grid() {
   }
 }
 
+void Grid::print() {
+  for (int i = 0; i < GRID; i ++) {
+    for (int j = 0; j < GRID; j++) {
+      cout << grid[i][j].colour;
+    }
+    cout << endl;
+  }
+}
+
 int main() {
   // init random number generation
   srand(time(NULL));
 
-  Grid g();
-  
+  Grid g;
   return 0;
 }
