@@ -61,7 +61,7 @@ void Grid::print() {
 void Grid::search() {
   for (int i = 0; i < GRID; i ++) {
     for (int j = 0; j < GRID; j++) {
-      Node thisNode = grid[i][j];
+      Node* thisNode = &grid[i][j];
 
       //      ┌───┐	  
       //      │ 1 │
@@ -92,6 +92,14 @@ void Grid::search() {
         adjacent[1] = ptr;
       } if (j == (GRID - 1)) {
         adjacent[3] = ptr;
+      }
+
+      for (int k = 0; k < 4; k++) {
+        if (thisNode->colour == adjacent[k]->colour) {
+          thisNode->siblings.push_back(adjacent[k]);
+        } else if ((thisNode->colour != adjacent[k]->colour) && (adjacent[k]->id != 200)) {
+          thisNode->connections.push_back(adjacent[k]);
+        }
       }
     }
   }
