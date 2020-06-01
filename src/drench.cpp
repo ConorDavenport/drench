@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <time.h>
+#include <fstream>
 
 using namespace std;
 
@@ -41,18 +42,24 @@ class Grid {
 };
 
 Grid::Grid() {
+  ifstream file;
+  file.open("../examples/1.csv");
+  string field;
+
   for (int i = 0; i < GRID; i ++) {
     for (int j = 0; j < GRID; j++) {
       grid[i][j].id = ((i * GRID) + j);
-      grid[i][j].colour = rng();
+      getline(file, field, ',');
+      grid[i][j].colour = (stoi(field), true);
     }
   }
+  file.close();
 }
 
 void Grid::print() {
   for (int i = 0; i < GRID; i ++) {
     for (int j = 0; j < GRID; j++) {
-      cout << grid[i][j].id << " ";
+      cout << grid[i][j].colour << " ";
     }
     cout << endl;
   }
@@ -112,5 +119,7 @@ int main() {
   Grid g;
   g.search();
   //g.print();
+  Grid g2;
+  g2.search();
   return 0;
 }
