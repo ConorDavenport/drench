@@ -63,6 +63,9 @@ void Grid::print() {
     }
     cout << endl;
   }
+  // create vector of nodes that represents groups of adjacent
+  // tiles of the same colour
+  vector<Node> grid;
 }
 
 void Grid::search() {
