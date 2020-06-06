@@ -34,7 +34,10 @@ int rng() {
 
 class Grid {
   public:
+    // represents game board
     Node grid[GRID][GRID] = {};
+    // represents game board condensed so that each block of tiles with the same
+    // colour are represented as a single node in the network
     vector<Node> network = {};
 
     Grid();
@@ -46,7 +49,9 @@ Grid::Grid() {
   ifstream file;
   file.open("../examples/1.csv");
   string field;
-
+  
+  // get colours from file and assign each element in grid array the
+  // corresponding colour
   for (int i = 0; i < GRID; i ++) {
     for (int j = 0; j < GRID; j++) {
       grid[i][j].id = ((i * GRID) + j);
@@ -64,12 +69,12 @@ void Grid::print() {
     }
     cout << endl;
   }
-  // create vector of nodes that represents groups of adjacent
-  // tiles of the same colour
-  vector<Node> grid;
 }
 
 void Grid::search() {
+  // for each element of grid get the four adjacent elements
+  // if the adjacent element is the same colour, add it to siblings else add to
+  // connections
   for (int i = 0; i < GRID; i ++) {
     for (int j = 0; j < GRID; j++) {
       Node* thisNode = &grid[i][j];
@@ -90,11 +95,12 @@ void Grid::search() {
       adjacent[3] = &grid[i][j+1];
 
       Node n;
-      n.colour = 6;
+      n.colour = 200;
       n.id = 200;
       Node* ptr;
       ptr = &n;
 
+      // out of bounds checking
       if (i == 0) {
         adjacent[0] = ptr;
       } if (i == (GRID - 1)) {
