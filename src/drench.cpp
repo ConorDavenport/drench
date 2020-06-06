@@ -4,6 +4,7 @@
 #include <vector>
 #include <time.h>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -121,8 +122,5 @@ int main() {
 
   Grid g;
   g.search();
-  //g.print();
-  Grid g2;
-  g2.search();
   return 0;
 }
