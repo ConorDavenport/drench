@@ -89,10 +89,10 @@ void Grid::search() {
 
       Node* adjacent[4];
       
-      adjacent[0] = &grid[i-1][j];
-      adjacent[1] = &grid[i][j-1];
-      adjacent[2] = &grid[i+1][j];
-      adjacent[3] = &grid[i][j+1];
+      adjacent[0] = &grid[i][j-1];
+      adjacent[1] = &grid[i-1][j];
+      adjacent[2] = &grid[i][j+1];
+      adjacent[3] = &grid[i+1][j];
 
       Node n;
       n.colour = 200;
@@ -102,13 +102,13 @@ void Grid::search() {
 
       // out of bounds checking
       if (i == 0) {
-        adjacent[0] = ptr;
-      } if (i == (GRID - 1)) {
-        adjacent[2] = ptr;
-      } if (j == 0) {
         adjacent[1] = ptr;
-      } if (j == (GRID - 1)) {
+      } if (i == (GRID - 1)) {
         adjacent[3] = ptr;
+      } if (j == 0) {
+        adjacent[0] = ptr;
+      } if (j == (GRID - 1)) {
+        adjacent[2] = ptr;
       }
 
       for (int k = 0; k < 4; k++) {
