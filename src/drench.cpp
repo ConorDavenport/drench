@@ -24,46 +24,7 @@ class Node {
     vector<Node*> connections;
 };
 
-class Grid {
-  public:
-    // represents game board
-    Node grid[GRID][GRID] = {};
-    // represents game board condensed so that each block of tiles with the same
-    // colour are represented as a single node in the network
-    vector<Node> network = {};
-
-    Grid();
-    void print();
-};
-
-Grid::Grid() {
-  ifstream file;
-  file.open("../examples/1.csv");
-  string field;
-  
-  // get colours from file and assign each element in grid array the
-  // corresponding colour
-  for (int i = 0; i < GRID; i ++) {
-    for (int j = 0; j < GRID; j++) {
-      grid[i][j].id = ((i * GRID) + j);
-      getline(file, field, ',');
-      grid[i][j].colour = (stoi(field), true);
-    }
-  }
-  file.close();
-}
-
-void Grid::print() {
-  for (int i = 0; i < GRID; i ++) {
-    for (int j = 0; j < GRID; j++) {
-      cout << grid[i][j].colour << " ";
-    }
-    cout << endl;
-  }
-}
-
 int main() {
 
-  Grid g;
   return 0;
 }
