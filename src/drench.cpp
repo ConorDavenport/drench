@@ -24,7 +24,26 @@ class Node {
     vector<Node*> connections;
 };
 
-int main() {
+// get drench example game
+// load game into grid, 1d vector
+void parseData(string fileName, vector<int>& grid) {
+  ifstream file;
+  file.open(fileName);
+  string field;
+
+  for (int i = 0; i < 81; i++) {
+    getline(file, field, ','); // read char from example
+    grid.push_back(stoi(field));  // string to int
+  }
+  file.close();
+}
+
+int main(int argc, char* argv[]) {
+  // init memory for grid
+  vector<int> grid;
+
+  // load data from file into grid
+  parseData(argv[1], grid);
 
   return 0;
 }
