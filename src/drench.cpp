@@ -40,7 +40,6 @@ class Grid {
 
     Grid();
     void print();
-    void search();
 };
 
 Grid::Grid() {
@@ -66,57 +65,6 @@ void Grid::print() {
       cout << grid[i][j].colour << " ";
     }
     cout << endl;
-  }
-}
-
-void Grid::search() {
-  // for each element of grid get the four adjacent elements
-  // if the adjacent element is the same colour, add it to siblings else add to
-  // connections
-  for (int i = 0; i < GRID; i ++) {
-    for (int j = 0; j < GRID; j++) {
-      Node* thisNode = &grid[i][j];
-
-      //      ┌───┐	  
-      //      │ 1 │
-      //  ┌───┼───┼───┐
-      //  │ 0 │ x │ 2 │
-      //  └───┼───┼───┘
-      //      │ 3 │
-      //      └───┘ 	
-
-      Node* adjacent[4];
-      
-      adjacent[0] = &grid[i][j-1];
-      adjacent[1] = &grid[i-1][j];
-      adjacent[2] = &grid[i][j+1];
-      adjacent[3] = &grid[i+1][j];
-
-      Node n;
-      n.colour = 200;
-      n.id = 200;
-      Node* ptr;
-      ptr = &n;
-
-      // out of bounds checking
-      if (i == 0) {
-        adjacent[1] = ptr;
-      } if (i == (GRID - 1)) {
-        adjacent[3] = ptr;
-      } if (j == 0) {
-        adjacent[0] = ptr;
-      } if (j == (GRID - 1)) {
-        adjacent[2] = ptr;
-      }
-
-      for (int k = 0; k < 4; k++) {
-        if (thisNode->colour == adjacent[k]->colour) {
-          thisNode->siblings.push_back(adjacent[k]);
-        } else if ((thisNode->colour != adjacent[k]->colour) && (adjacent[k]->id != 200)) {
-          thisNode->connections.push_back(adjacent[k]);
-        }
-      }
-    }
   }
 }
 
