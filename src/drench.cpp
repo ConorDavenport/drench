@@ -22,7 +22,19 @@ class Node {
     int id;
     // connections to other tiles
     vector<Node*> connections;
+  
+    Node(int c, int id);
+    void addConnection(Node* conn);
 };
+
+Node::Node(int c, int id) {
+  colour = c;
+  id = id;
+}
+
+void Node::addConnection(Node* conn) {
+  connections.push_back(conn);
+}
 
 // get drench example game
 // load game into grid, 1d vector
