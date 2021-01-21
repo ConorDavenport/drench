@@ -38,6 +38,10 @@ void parseData(string fileName, vector<int>& grid) {
   file.close();
 }
 
+// generateNetwork() iterates through the grid
+// and finds all adjacent cells that are the same
+// colour and groups them together into one node
+// per grouping
 Node* generateNetwork(vector<int>& grid) {
 
 }
