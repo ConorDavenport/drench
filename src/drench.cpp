@@ -25,11 +25,6 @@ class Node {
     vector<Node*> connections;
 };
 
-
-int rng() {
-  return rand() % 6 + 0;
-}
-
 class Grid {
   public:
     // represents game board
@@ -69,8 +64,6 @@ void Grid::print() {
 }
 
 int main() {
-  // init random number generation
-  srand(time(NULL));
 
   Grid g;
   return 0;
