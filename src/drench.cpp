@@ -19,8 +19,6 @@ class Node {
     // 4 red
     // 5 yellow
     int colour;
-    // pointers to other tiles in that block
-    vector<Node*> siblings;
     // uuid
     int id;
     // connections to other tiles
