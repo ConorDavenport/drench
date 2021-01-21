@@ -38,12 +38,18 @@ void parseData(string fileName, vector<int>& grid) {
   file.close();
 }
 
+Node* generateNetwork(vector<int>& grid) {
+
+}
+
 int main(int argc, char* argv[]) {
   // init memory for grid
   vector<int> grid;
 
   // load data from file into grid
   parseData(argv[1], grid);
+
+  Node* network = generateNetwork(grid);
 
   return 0;
 }
