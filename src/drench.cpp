@@ -73,6 +73,5 @@ int main() {
   srand(time(NULL));
 
   Grid g;
-  g.search();
   return 0;
 }
