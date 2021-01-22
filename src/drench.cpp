@@ -42,33 +42,37 @@ void Node::rmConnection(int id) {
 }
 
 // get drench example game
-// load game into grid, 1d vector
-void parseData(string fileName, vector<int>& grid) {
+// load game into grid, return 2d array
+int** parseData(string fileName) {
   ifstream file;
   file.open(fileName);
   string field;
 
-  for (int i = 0; i < 81; i++) {
-    getline(file, field, ','); // read char from example
-    grid.push_back(stoi(field));  // string to int
+  int** grid = 0;
+  grid = new int*[GRID];
+
+  for (int h = 0; h < GRID; h++) {
+    grid[h] = new int[GRID];
+    for (int w = 0; w < GRID; w++) {
+      getline(file, field, ','); // read char from example
+      grid[h][w] = stoi(field);
+    }
   }
   file.close();
+  return grid;
 }
 
 // generateNetwork() iterates through the grid
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
 // per grouping
-Node* generateNetwork(vector<int>& grid) {
+Node* generateNetwork(int** grid) {
 
 }
 
 int main(int argc, char* argv[]) {
-  // init memory for grid
-  vector<int> grid;
-
   // load data from file into grid
-  parseData(argv[1], grid);
+  int** grid = parseData(argv[1]);
 
   Node* network = generateNetwork(grid);
 
