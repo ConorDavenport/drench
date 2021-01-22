@@ -62,6 +62,23 @@ int** parseData(string fileName) {
   return grid;
 }
 
+void print(int** grid) {
+  for (int i = 0; i < GRID; i++) {
+    for (int j = 0; j < GRID; j++) {
+      printf("%i", grid[i][j]);
+    }
+    printf("\n");
+  }
+}
+
+void clean(int** grid) {
+  for (int h = 0; h < GRID; h++) {
+    delete [] grid[h];
+  }
+  delete [] grid;
+  grid = 0;
+}
+
 // generateNetwork() iterates through the grid
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
