@@ -25,6 +25,7 @@ class Node {
   
     Node(int c, int id);
     void addConnection(Node* conn);
+    void rmConnection(int id);
 };
 
 Node::Node(int c, int id) {
@@ -34,6 +35,10 @@ Node::Node(int c, int id) {
 
 void Node::addConnection(Node* conn) {
   connections.push_back(conn);
+}
+
+void Node::rmConnection(int id) {
+  
 }
 
 // get drench example game
