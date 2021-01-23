@@ -79,6 +79,10 @@ void clean(int** grid) {
   grid = 0;
 }
 
+void clean(Node* network) {
+  delete [] network;
+}
+
 // generateNetwork() iterates through the grid
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
