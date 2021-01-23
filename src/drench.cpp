@@ -67,6 +67,15 @@ Node** parseData(string fileName) {
   return grid;
 }
 
+void print(Node** grid) {
+  for (int i = 0; i < GRID; i++) {
+    for (int j = 0; j < GRID; j++) {
+      printf("%i", grid[i][j].colour);
+    }
+    printf("\n");
+  }
+}
+
 void clean(Node** grid) {
   for (int h = 0; h < GRID; h++) {
     delete [] grid[h];
