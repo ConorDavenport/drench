@@ -86,7 +86,15 @@ void clean(int** grid) {
 // when this works I can probably put this into
 // the parseData function
 vector<Node> generateNetwork(int** grid) {
-
+  vector<Node> network;
+  int id = 0;
+  for (int h = 0; h < GRID; h++) {
+    grid[h] = new int[GRID];
+    for (int w = 0; w < GRID; w++) {
+      network.push_back(Node(grid[h][w], id));
+      id++;
+    }
+  }
 }
 
 int main(int argc, char* argv[]) {
