@@ -23,6 +23,7 @@ class Node {
     // connections to other tiles
     vector<Node*> connections;
   
+    Node() {};
     Node(int c, int id);
     void addConnection(Node* conn);
     void rmConnection(int id);
@@ -43,35 +44,30 @@ void Node::rmConnection(int id) {
 
 // get drench example game
 // load game into grid, return 2d array
-int** parseData(string fileName) {
+Node** parseData(string fileName) {
   ifstream file;
   file.open(fileName);
   string field;
 
-  int** grid = 0;
-  grid = new int*[GRID];
+  Node** grid = 0;
+  grid = new Node*[GRID];
+
+  int id = 0;
 
   for (int h = 0; h < GRID; h++) {
-    grid[h] = new int[GRID];
+    grid[h] = new Node[GRID];
     for (int w = 0; w < GRID; w++) {
       getline(file, field, ','); // read char from example
-      grid[h][w] = stoi(field);
+      grid[h][w].colour = stoi(field);
+      grid[h][w].id = id;
+      ++id;
     }
   }
   file.close();
   return grid;
 }
 
-void print(int** grid) {
-  for (int i = 0; i < GRID; i++) {
-    for (int j = 0; j < GRID; j++) {
-      printf("%i", grid[i][j]);
-    }
-    printf("\n");
-  }
-}
-
-void clean(int** grid) {
+void clean(Node** grid) {
   for (int h = 0; h < GRID; h++) {
     delete [] grid[h];
   }
@@ -85,21 +81,13 @@ void clean(int** grid) {
 // per grouping
 // when this works I can probably put this into
 // the parseData function
-vector<Node> generateNetwork(int** grid) {
-  vector<Node> network;
-  int id = 0;
-  for (int h = 0; h < GRID; h++) {
-    grid[h] = new int[GRID];
-    for (int w = 0; w < GRID; w++) {
-      network.push_back(Node(grid[h][w], id));
-      id++;
-    }
-  }
+vector<Node> generateNetwork(Node** grid) {
+  
 }
 
 int main(int argc, char* argv[]) {
   // load data from file into grid
-  int** grid = parseData(argv[1]);
+  Node** grid = parseData(argv[1]);
   vector<Node> network = generateNetwork(grid);
   clean(grid);
 
