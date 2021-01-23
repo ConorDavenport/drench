@@ -94,8 +94,8 @@ Node* generateNetwork(int** grid) {
 int main(int argc, char* argv[]) {
   // load data from file into grid
   int** grid = parseData(argv[1]);
+  Node* network = generateNetwork(grid);
   clean(grid);
-  //Node* network = generateNetwork(grid);
 
   return 0;
 }
