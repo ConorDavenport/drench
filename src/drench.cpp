@@ -83,6 +83,8 @@ void clean(int** grid) {
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
 // per grouping
+// when this works I can probably put this into
+// the parseData function
 vector<Node> generateNetwork(int** grid) {
 
 }
