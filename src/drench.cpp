@@ -87,14 +87,14 @@ void clean(Node* network) {
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
 // per grouping
-Node* generateNetwork(int** grid) {
+vector<Node> generateNetwork(int** grid) {
 
 }
 
 int main(int argc, char* argv[]) {
   // load data from file into grid
   int** grid = parseData(argv[1]);
-  Node* network = generateNetwork(grid);
+  vector<Node> network = generateNetwork(grid);
   clean(grid);
 
   return 0;
