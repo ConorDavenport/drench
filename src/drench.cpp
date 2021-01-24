@@ -91,7 +91,31 @@ void clean(Node** grid) {
 // when this works I can probably put this into
 // the parseData function
 vector<Node> generateNetwork(Node** grid) {
-  
+  vector<Node> network;
+
+  for (int i = 0; i < GRID; ++i) {
+    for (int j = 0; j < GRID; ++j) {
+      Node* n = &grid[i][j];
+
+      Node* n_up = &grid[i-1][j];
+      Node* n_down = &grid[i+1][j];
+      Node* n_right = &grid[i][j-1];
+      Node* n_left = &grid[i][j+1];
+
+      // out of bounds check
+      Node n_null(200,200);
+
+      if (i == 0) {
+        n_up = &n_null;
+      } if (i == (GRID - 1)) {
+        n_down = &n_null;
+      } if (j == 0) {
+        n_right = &n_null;
+      } if (j == (GRID - 1)) {
+        n_left = &n_null;
+      }
+    }
+  }
 }
 
 int main(int argc, char* argv[]) {
