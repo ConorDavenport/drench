@@ -20,16 +20,19 @@ class Node {
     int colour;
     // uuid
     int id;
+    // tracks whether node has been grouped
+    bool grouped;
     // connections to other tiles
     vector<Node*> connections;
   
-    Node() {};
+    Node() { grouped = false; };
     Node(int c, int id);
     void addConnection(Node* conn);
     void rmConnection(int id);
 };
 
 Node::Node(int c, int id) {
+  grouped = false;
   colour = c;
   id = id;
 }
