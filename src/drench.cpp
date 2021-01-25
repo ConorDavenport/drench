@@ -87,6 +87,29 @@ void clean(Node** grid) {
   grid = 0;
 }
 
+void group(int i, int j, Node** grid) {
+  Node* n = &grid[i][j];
+
+  Node* n_up = &grid[i-1][j];
+  Node* n_down = &grid[i+1][j];
+  Node* n_right = &grid[i][j-1];
+  Node* n_left = &grid[i][j+1];
+
+  // out of bounds check
+  Node n_null(200,200);
+
+  if (i == 0) {
+    n_up = &n_null;
+  } if (i == (GRID - 1)) {
+    n_down = &n_null;
+  } if (j == 0) {
+    n_right = &n_null;
+  } if (j == (GRID - 1)) {
+    n_left = &n_null;
+  }
+  
+}
+
 // generateNetwork() iterates through the grid
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
@@ -98,24 +121,8 @@ vector<Node> generateNetwork(Node** grid) {
 
   for (int i = 0; i < GRID; ++i) {
     for (int j = 0; j < GRID; ++j) {
-      Node* n = &grid[i][j];
-
-      Node* n_up = &grid[i-1][j];
-      Node* n_down = &grid[i+1][j];
-      Node* n_right = &grid[i][j-1];
-      Node* n_left = &grid[i][j+1];
-
-      // out of bounds check
-      Node n_null(200,200);
-
-      if (i == 0) {
-        n_up = &n_null;
-      } if (i == (GRID - 1)) {
-        n_down = &n_null;
-      } if (j == 0) {
-        n_right = &n_null;
-      } if (j == (GRID - 1)) {
-        n_left = &n_null;
+      if (!grid[i][j].grouped) {
+        group(i, j, grid);
       }
     }
   }
