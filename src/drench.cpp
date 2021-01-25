@@ -88,24 +88,26 @@ void clean(Node** grid) {
 }
 
 void group(int i, int j, Node** grid) {
-  Node* n = &grid[i][j];
+  Node n = grid[i][j];
 
-  Node* n_up = &grid[i-1][j];
-  Node* n_down = &grid[i+1][j];
-  Node* n_right = &grid[i][j-1];
-  Node* n_left = &grid[i][j+1];
-
+  Node adjacent[4] = {
+    grid[i-1][j],
+    grid[i+1][j],
+    grid[i][j-1],
+    grid[i][j+1]
+  };
+  
   // out of bounds check
   Node n_null(200,200);
 
   if (i == 0) {
-    n_up = &n_null;
+    adjacent[0] = n_null;
   } if (i == (GRID - 1)) {
-    n_down = &n_null;
+    adjacent[1] = n_null;
   } if (j == 0) {
-    n_right = &n_null;
+    adjacent[2] = n_null;
   } if (j == (GRID - 1)) {
-    n_left = &n_null;
+    adjacent[3] = n_null;
   }
   
 }
