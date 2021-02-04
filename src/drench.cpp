@@ -87,7 +87,7 @@ void clean(Node** grid) {
   grid = 0;
 }
 
-void group(int i, int j, Node** grid) {
+vector<Node*> group(int i, int j, Node** grid) {
   Node n = grid[i][j];
 
   Node adjacent[4] = {
@@ -124,10 +124,13 @@ vector<Node> generateNetwork(Node** grid) {
   for (int i = 0; i < GRID; ++i) {
     for (int j = 0; j < GRID; ++j) {
       if (!grid[i][j].grouped) {
-        group(i, j, grid);
+        grid[i][j].connections = group(i, j, grid);
+        network.push_back(grid[i][j]);
       }
     }
   }
+
+  return network;
 }
 
 int main(int argc, char* argv[]) {
