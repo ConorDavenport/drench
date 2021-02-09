@@ -80,6 +80,8 @@ void clean(Node** grid) {
 vector<Node*> group(int i, int j, Node** grid) {
   Node* n = &grid[i][j];
 
+  // create a structure of containing the four adjacent
+  // elements in the 2d array grid
   struct Adjacent {
     Node *n;
     int i;
@@ -114,6 +116,10 @@ vector<Node*> group(int i, int j, Node** grid) {
   
   n->grouped = true;
 
+  // iterate through the adjacent cells
+  // if cell k is the same colour, and it's not grouped yet
+  // call the group function and pass k
+  // don't call on grouped cells to avoid loops
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
       vector<Node*> newConnections = group(adjacent[k].i, adjacent[k].j, grid);
