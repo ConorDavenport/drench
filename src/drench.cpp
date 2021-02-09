@@ -27,22 +27,12 @@ class Node {
   
     Node() { grouped = false; };
     Node(int c, int id);
-    void addConnection(Node* conn);
-    void rmConnection(int id);
 };
 
 Node::Node(int c, int id) {
   grouped = false;
   colour = c;
   id = id;
-}
-
-void Node::addConnection(Node* conn) {
-  connections.push_back(conn);
-}
-
-void Node::rmConnection(int id) {
-  
 }
 
 // get drench example game
@@ -88,28 +78,49 @@ void clean(Node** grid) {
 }
 
 vector<Node*> group(int i, int j, Node** grid) {
-  Node n = grid[i][j];
+  Node* n = &grid[i][j];
 
-  Node adjacent[4] = {
-    grid[i-1][j],
-    grid[i+1][j],
-    grid[i][j-1],
-    grid[i][j+1]
+  struct Adjacent {
+    Node *n;
+    int i;
+    int j;
+
+    Adjacent(Node node, int loc_i, int loc_j) {
+      n = &node;
+      i = loc_i;
+      j = loc_j;
+    }
+  } up(grid[i-1][j], i-1, j),
+    down(grid[i+1][j], i+1, j),
+    left(grid[i][j-1], i, j-1),
+    right(grid[i][j+1], i, j+1);
+
+  Adjacent adjacent[4] = {
+    up, down, left, right
   };
   
   // out of bounds check
   Node n_null(200,200);
 
   if (i == 0) {
-    adjacent[0] = n_null;
+    adjacent[0] = Adjacent(n_null, adjacent[0].i, adjacent[0].j);
   } if (i == (GRID - 1)) {
-    adjacent[1] = n_null;
+    adjacent[1] = Adjacent(n_null, adjacent[1].i, adjacent[1].j);
   } if (j == 0) {
-    adjacent[2] = n_null;
+    adjacent[2] = Adjacent(n_null, adjacent[2].i, adjacent[2].j);
   } if (j == (GRID - 1)) {
-    adjacent[3] = n_null;
+    adjacent[3] = Adjacent(n_null, adjacent[3].i, adjacent[3].j);
   }
   
+  n->grouped = true;
+
+  for (int k = 0; k < 4; k++) {
+    if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
+      vector<Node*> newConnections = group(adjacent[k].i, adjacent[k].j, grid);
+      n->connections.insert(end(n->connections), begin(newConnections), end(newConnections));
+    } 
+  }
+
 }
 
 // generateNetwork() iterates through the grid
