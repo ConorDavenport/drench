@@ -109,7 +109,7 @@ vector<Node*> group(int i, int j, Node** grid) {
   };
   
   // out of bounds check
-  Node n_null(200,200);
+  Node n_null(true, 200,200);
 
   if (i == 0) {
     adjacent[0] = Adjacent(n_null, adjacent[0].i, adjacent[0].j);
