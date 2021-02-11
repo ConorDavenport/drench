@@ -153,7 +153,6 @@ vector<Node> generateNetwork(Node** grid) {
   for (int i = 0; i < GRID; ++i) {
     for (int j = 0; j < GRID; ++j) {
       if (!grid[i][j].grouped) {
-      printf("%i %i\n", i, j);
         grid[i][j].connections = group(i, j, grid);
         network.push_back(grid[i][j]);
       }
@@ -167,11 +166,6 @@ int main(int argc, char* argv[]) {
   // load data from file into grid
   Node** grid = parseData(argv[1]);
   vector<Node> network = generateNetwork(grid);
-
-  for (vector<Node>::iterator it = network.begin(); it != network.end(); it++) {
-    printf("%i\n", (*it).colour);
-  }
-
   clean(grid);
 
   return 0;
