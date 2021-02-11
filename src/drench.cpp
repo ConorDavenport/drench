@@ -87,6 +87,8 @@ void clean(Node** grid) {
 vector<Node*> group(int i, int j, Node** grid) {
   Node* n = &grid[i][j];
 
+  Node n_null(true, 200,200);
+
   // create a structure of containing the four adjacent
   // elements in the 2d array grid
   struct Adjacent {
@@ -99,26 +101,29 @@ vector<Node*> group(int i, int j, Node** grid) {
       i = loc_i;
       j = loc_j;
     }
-  } up(grid[i-1][j], i-1, j),
-    down(grid[i+1][j], i+1, j),
-    left(grid[i][j-1], i, j-1),
-    right(grid[i][j+1], i, j+1);
+  } up(n_null, i-1, j),
+  down(n_null, i+1, j),
+  left(n_null, i, j-1),
+  right(n_null, i, j+1);
 
   Adjacent adjacent[4] = {
     up, down, left, right
   };
   
   // out of bounds check
-  Node n_null(true, 200,200);
+  
 
   if (i == 0) {
-    adjacent[0] = Adjacent(n_null, adjacent[0].i, adjacent[0].j);
-  } if (i == (GRID - 1)) {
-    adjacent[1] = Adjacent(n_null, adjacent[1].i, adjacent[1].j);
-  } if (j == 0) {
-    adjacent[2] = Adjacent(n_null, adjacent[2].i, adjacent[2].j);
-  } if (j == (GRID - 1)) {
-    adjacent[3] = Adjacent(n_null, adjacent[3].i, adjacent[3].j);
+    adjacent[1] = Adjacent(grid[i+1][j], adjacent[1].i, adjacent[1].j);
+  } 
+  if (i == (GRID - 1)) {
+    adjacent[0] = Adjacent(grid[i-1][j], adjacent[0].i, adjacent[0].j);
+  } 
+  if (j == 0) {
+    adjacent[3] = Adjacent(grid[i][j+1], adjacent[3].i, adjacent[3].j);
+  } 
+  if (j == (GRID - 1)) {
+    adjacent[2] = Adjacent(grid[i][j-1], adjacent[2].i, adjacent[2].j);
   }
   
   n->grouped = true;
