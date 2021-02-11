@@ -27,10 +27,17 @@ class Node {
   
     Node() { grouped = false; };
     Node(int c, int id);
+    Node(bool g, int c, int id);
 };
 
 Node::Node(int c, int id) {
   grouped = false;
+  colour = c;
+  id = id;
+}
+
+Node::Node(bool g, int c, int id) {
+  grouped = g;
   colour = c;
   id = id;
 }
