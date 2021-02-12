@@ -134,6 +134,7 @@ vector<Node*> group(int i, int j, Node** grid) {
   // don't call on grouped cells to avoid loops
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
+      n->connections.push_back(adjacent[k].n);
       vector<Node*> newConnections = group(adjacent[k].i, adjacent[k].j, grid);
       n->connections.insert(end(n->connections), begin(newConnections), end(newConnections));
     } 
