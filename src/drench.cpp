@@ -111,8 +111,6 @@ vector<Node*> group(int i, int j, Node** grid) {
   };
   
   // out of bounds check
-  
-
   if (i != 0) {
     adjacent[0] = Adjacent(grid[i-1][j], adjacent[0].i, adjacent[0].j);
   } 
@@ -134,7 +132,6 @@ vector<Node*> group(int i, int j, Node** grid) {
   // don't call on grouped cells to avoid loops
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
-      printf("%i %i %i\n",n->id,k,adjacent[k].n->id);
       n->connections.push_back(adjacent[k].n);
       vector<Node*> newConnections = group(adjacent[k].i, adjacent[k].j, grid);
       n->connections.insert(end(n->connections), begin(newConnections), end(newConnections));
