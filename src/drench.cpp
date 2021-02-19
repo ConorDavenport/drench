@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -135,6 +136,8 @@ vector<Node*> group(int i, int j, Node** grid) {
       n->connections.push_back(adjacent[k].n);
       vector<Node*> newConnections = group(adjacent[k].i, adjacent[k].j, grid);
       n->connections.insert(end(n->connections), begin(newConnections), end(newConnections));
+      sort(n->connections.begin(), n->connections.end());
+      n->connections.erase(unique(n->connections.begin(), n->connections.end()), n->connections.end());
     } 
   }
   return n->connections;
