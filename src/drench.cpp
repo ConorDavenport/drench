@@ -25,7 +25,7 @@ class Node {
     bool grouped;
     // connections to other tiles
     vector<Node*> connections;
-  
+    Node* parent;
     Node() { grouped = false; };
     Node(int c, int id);
     Node(bool g, int c, int id);
@@ -71,7 +71,7 @@ Node** parseData(string fileName) {
 void print(Node** grid) {
   for (int i = 0; i < GRID; i++) {
     for (int j = 0; j < GRID; j++) {
-      printf("%i", grid[i][j].colour);
+      printf("%i", grid[i][j].parent->id);
     }
     printf("\n");
   }
@@ -92,7 +92,8 @@ void clean(Node** grid) {
   grid = 0;
 }
 
-vector<Node*> group(int i, int j, Node** grid, Node* parent) {
+void group(int i, int j, Node** grid, Node* parent) {
+  // at first call n = parent
   Node* n = &grid[i][j];
 
   Node n_null(true, 200,200);
@@ -136,41 +137,31 @@ vector<Node*> group(int i, int j, Node** grid, Node* parent) {
 
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
-      n->connections.push_back(adjacent[k].n);
-      vector<Node*> newConnections = group(adjacent[k].i, adjacent[k].j, grid);
-      n->connections.insert(end(n->connections), begin(newConnections), end(newConnections));
-      sort(n->connections.begin(), n->connections.end());
-      n->connections.erase(unique(n->connections.begin(), n->connections.end()), n->connections.end());
-    } 
+      n->parent = parent;
+      group(adjacent[k].i, adjacent[k].j, grid, parent);
+    }
   }
-  return n->connections;
 }
 
 // generateNetwork() iterates through the grid
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
 // per grouping
-// when this works I can probably put this into
-// the parseData function
-vector<Node> generateNetwork(Node** grid) {
-  vector<Node> network;
-
+void generateNetwork(Node** grid) {
   for (int i = 0; i < GRID; ++i) {
     for (int j = 0; j < GRID; ++j) {
       if (!grid[i][j].grouped) {
         group(i, j, grid, &grid[i][j]);
-        network.push_back(grid[i][j]);
       }
     }
   }
-
-  return network;
 }
 
 int main(int argc, char* argv[]) {
   // load data from file into grid
   Node** grid = parseData(argv[1]);
-  vector<Node> network = generateNetwork(grid);
+  generateNetwork(grid);
+  print(grid);
   clean(grid);
 
   return 0;
