@@ -25,6 +25,7 @@ class Node {
     bool grouped;
     // connections to other tiles
     vector<Node*> connections;
+    // parent node of same-colour group
     Node* parent;
     Node() { grouped = false; };
     Node(int c, int id);
@@ -160,7 +161,6 @@ int main(int argc, char* argv[]) {
   // load data from file into grid
   Node** grid = parseData(argv[1]);
   generateNetwork(grid);
-  print(grid);
   clean(grid);
 
   return 0;
