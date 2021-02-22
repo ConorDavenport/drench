@@ -142,8 +142,53 @@ void group(int i, int j, Node** grid, Node* parent) {
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
       group(adjacent[k].i, adjacent[k].j, grid, parent);
-    } else if (adjacent[k].n->colour != n->colour) {
-      n->parent->connections.push_back(adjacent[k].n);
+    }
+  }
+}
+
+void establishConnections(int i, int j, Node** grid) {
+  Node* n = &grid[i][j];
+
+  Node n_null(true, 200,200);
+
+  // create a structure of containing the four adjacent
+  // elements in the 2d array grid
+  struct Adjacent {
+    Node *n;
+    int i;
+    int j;
+
+    Adjacent(Node node, int loc_i, int loc_j) {
+      n = &node;
+      i = loc_i;
+      j = loc_j;
+    }
+  } up(n_null, i-1, j),
+  down(n_null, i+1, j),
+  left(n_null, i, j-1),
+  right(n_null, i, j+1);
+
+  Adjacent adjacent[4] = {
+    up, down, left, right
+  };
+  
+  // out of bounds check
+  if (i != 0) {
+    adjacent[0] = Adjacent(grid[i-1][j], adjacent[0].i, adjacent[0].j);
+  } 
+  if (i != (GRID - 1)) {
+    adjacent[1] = Adjacent(grid[i+1][j], adjacent[1].i, adjacent[1].j);
+  } 
+  if (j != 0) {
+    adjacent[2] = Adjacent(grid[i][j-1], adjacent[2].i, adjacent[2].j);
+  } 
+  if (j != (GRID - 1)) {
+    adjacent[3] = Adjacent(grid[i][j+1], adjacent[3].i, adjacent[3].j);
+  }
+  
+  for (int k = 0; k < 4; k++) {
+    if (adjacent[k].n->colour != n->colour) {
+      n->parent->connections.push_back(adjacent[k].n->parent);
     }
   }
 }
@@ -161,12 +206,25 @@ void generateNetwork(Node** grid) {
       }
     }
   }
+  for (int i = 0; i < GRID; ++i) {
+    for (int j = 0; j < GRID; ++j) {
+      establishConnections(i, j, grid);
+    }
+  }
+}
+
+void solve(Node** grid) {
+  
 }
 
 int main(int argc, char* argv[]) {
   // load data from file into grid
   Node** grid = parseData(argv[1]);
   generateNetwork(grid);
+
+
+
+  solve(grid);
   clean(grid);
 
   return 0;
