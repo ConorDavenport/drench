@@ -77,6 +77,13 @@ void print(Node** grid) {
   }
 }
 
+void print(vector<Node> vec) {
+  for (vector<Node>::iterator i = vec.begin(); i != vec.end(); i++) {
+    printf("%i: %i", (*i).id, (*i).connections.size());
+    printf("\n");
+  }
+}
+
 void clean(Node** grid) {
   for (int h = 0; h < GRID; h++) {
     delete [] grid[h];
@@ -85,7 +92,7 @@ void clean(Node** grid) {
   grid = 0;
 }
 
-vector<Node*> group(int i, int j, Node** grid) {
+vector<Node*> group(int i, int j, Node** grid, Node* parent) {
   Node* n = &grid[i][j];
 
   Node n_null(true, 200,200);
@@ -127,10 +134,6 @@ vector<Node*> group(int i, int j, Node** grid) {
   
   n->grouped = true;
 
-  // iterate through the adjacent cells
-  // if cell k is the same colour, and it's not grouped yet
-  // call the group function and pass k
-  // don't call on grouped cells to avoid loops
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
       n->connections.push_back(adjacent[k].n);
@@ -155,7 +158,7 @@ vector<Node> generateNetwork(Node** grid) {
   for (int i = 0; i < GRID; ++i) {
     for (int j = 0; j < GRID; ++j) {
       if (!grid[i][j].grouped) {
-        grid[i][j].connections = group(i, j, grid);
+        group(i, j, grid, &grid[i][j]);
         network.push_back(grid[i][j]);
       }
     }
