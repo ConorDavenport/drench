@@ -88,6 +88,16 @@ void print(vector<Node> vec) {
   }
 }
 
+void print(vector<Node*> vec) {
+  for (vector<Node*>::iterator i = vec.begin(); i != vec.end(); i++) {
+    printf("%i: [%i] ", (**i).id, (**i).connections.size());
+    for (vector<Node*>::iterator j = (**i).connections.begin(); j != (**i).connections.end(); j++) {
+      printf("%i, ", (**j).parent->id);
+    }
+    printf("\n");
+  }
+}
+
 void clean(Node** grid) {
   for (int h = 0; h < GRID; h++) {
     delete [] grid[h];
@@ -197,11 +207,14 @@ void establishConnections(int i, int j, Node** grid) {
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
 // per grouping
-void generateNetwork(Node** grid) {
+vector<Node*> generateNetwork(Node** grid) {
+  vector<Node*> network;
+
   for (int i = 0; i < GRID; ++i) {
     for (int j = 0; j < GRID; ++j) {
       if (!grid[i][j].grouped) {
         grid[i][j].isParent = true;
+        network.push_back(&grid[i][j]);
         group(i, j, grid, &grid[i][j]);
       }
     }
@@ -211,6 +224,9 @@ void generateNetwork(Node** grid) {
       establishConnections(i, j, grid);
     }
   }
+  sort(network.begin(), network.end());
+  network.erase(unique(network.begin(), network.end()), network.end());
+  return network;
 }
 
 void solve(Node** grid) {
@@ -220,10 +236,8 @@ void solve(Node** grid) {
 int main(int argc, char* argv[]) {
   // load data from file into grid
   Node** grid = parseData(argv[1]);
-  generateNetwork(grid);
-
-
-
+  vector<Node*> network = generateNetwork(grid);
+  print(network);
   solve(grid);
   clean(grid);
 
