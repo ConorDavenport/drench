@@ -27,18 +27,21 @@ class Node {
     vector<Node*> connections;
     // parent node of same-colour group
     Node* parent;
-    Node() { grouped = false; };
+    bool isParent;
+    Node() { grouped = false; isParent = false; };
     Node(int c, int id);
     Node(bool g, int c, int id);
 };
 
 Node::Node(int c, int id) {
   grouped = false;
+  isParent = false;
   colour = c;
   id = id;
 }
 
 Node::Node(bool g, int c, int id) {
+  isParent = false;
   grouped = g;
   colour = c;
   id = id;
@@ -139,6 +142,8 @@ void group(int i, int j, Node** grid, Node* parent) {
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
       group(adjacent[k].i, adjacent[k].j, grid, parent);
+    } else if (adjacent[k].n->colour != n->colour) {
+      n->parent->connections.push_back(adjacent[k].n);
     }
   }
 }
@@ -151,6 +156,7 @@ void generateNetwork(Node** grid) {
   for (int i = 0; i < GRID; ++i) {
     for (int j = 0; j < GRID; ++j) {
       if (!grid[i][j].grouped) {
+        grid[i][j].isParent = true;
         group(i, j, grid, &grid[i][j]);
       }
     }
