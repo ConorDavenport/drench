@@ -95,7 +95,7 @@ void clean(Node** grid) {
 void group(int i, int j, Node** grid, Node* parent) {
   // at first call n = parent
   Node* n = &grid[i][j];
-
+  n->parent = parent;
   Node n_null(true, 200,200);
 
   // create a structure of containing the four adjacent
@@ -137,7 +137,6 @@ void group(int i, int j, Node** grid, Node* parent) {
 
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
-      n->parent = parent;
       group(adjacent[k].i, adjacent[k].j, grid, parent);
     }
   }
