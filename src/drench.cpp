@@ -137,6 +137,7 @@ void group(int i, int j, Node** grid, Node* parent) {
 
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
+      printf("%i %i %i\n", parent->colour, i, j);
       n->parent = parent;
       group(adjacent[k].i, adjacent[k].j, grid, parent);
     }
