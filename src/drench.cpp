@@ -25,19 +25,23 @@ class Node {
     bool grouped;
     // connections to other tiles
     vector<Node*> connections;
+    // parent node of same-colour group
     Node* parent;
-    Node() { grouped = false; };
+    bool isParent;
+    Node() { grouped = false; isParent = false; };
     Node(int c, int id);
     Node(bool g, int c, int id);
 };
 
 Node::Node(int c, int id) {
   grouped = false;
+  isParent = false;
   colour = c;
   id = id;
 }
 
 Node::Node(bool g, int c, int id) {
+  isParent = false;
   grouped = g;
   colour = c;
   id = id;
@@ -84,6 +88,16 @@ void print(vector<Node> vec) {
   }
 }
 
+void print(vector<Node*> vec) {
+  for (vector<Node*>::iterator i = vec.begin(); i != vec.end(); i++) {
+    printf("%i: [%i] ", (**i).id, (**i).connections.size());
+    for (vector<Node*>::iterator j = (**i).connections.begin(); j != (**i).connections.end(); j++) {
+      printf("%i, ", (**j).parent->id);
+    }
+    printf("\n");
+  }
+}
+
 void clean(Node** grid) {
   for (int h = 0; h < GRID; h++) {
     delete [] grid[h];
@@ -95,7 +109,7 @@ void clean(Node** grid) {
 void group(int i, int j, Node** grid, Node* parent) {
   // at first call n = parent
   Node* n = &grid[i][j];
-
+  n->parent = parent;
   Node n_null(true, 200,200);
 
   // create a structure of containing the four adjacent
@@ -144,25 +158,89 @@ void group(int i, int j, Node** grid, Node* parent) {
   }
 }
 
+void establishConnections(int i, int j, Node** grid) {
+  Node* n = &grid[i][j];
+
+  Node n_null(true, 200,200);
+
+  // create a structure of containing the four adjacent
+  // elements in the 2d array grid
+  struct Adjacent {
+    Node *n;
+    int i;
+    int j;
+
+    Adjacent(Node node, int loc_i, int loc_j) {
+      n = &node;
+      i = loc_i;
+      j = loc_j;
+    }
+  } up(n_null, i-1, j),
+  down(n_null, i+1, j),
+  left(n_null, i, j-1),
+  right(n_null, i, j+1);
+
+  Adjacent adjacent[4] = {
+    up, down, left, right
+  };
+  
+  // out of bounds check
+  if (i != 0) {
+    adjacent[0] = Adjacent(grid[i-1][j], adjacent[0].i, adjacent[0].j);
+  } 
+  if (i != (GRID - 1)) {
+    adjacent[1] = Adjacent(grid[i+1][j], adjacent[1].i, adjacent[1].j);
+  } 
+  if (j != 0) {
+    adjacent[2] = Adjacent(grid[i][j-1], adjacent[2].i, adjacent[2].j);
+  } 
+  if (j != (GRID - 1)) {
+    adjacent[3] = Adjacent(grid[i][j+1], adjacent[3].i, adjacent[3].j);
+  }
+  
+  for (int k = 0; k < 4; k++) {
+    if (adjacent[k].n->colour != n->colour) {
+      n->parent->connections.push_back(adjacent[k].n->parent);
+    }
+  }
+}
+
 // generateNetwork() iterates through the grid
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
 // per grouping
-void generateNetwork(Node** grid) {
+vector<Node*> generateNetwork(Node** grid) {
+  vector<Node*> network;
+
   for (int i = 0; i < GRID; ++i) {
     for (int j = 0; j < GRID; ++j) {
       if (!grid[i][j].grouped) {
+        grid[i][j].isParent = true;
+        network.push_back(&grid[i][j]);
         group(i, j, grid, &grid[i][j]);
       }
     }
   }
+  for (int i = 0; i < GRID; ++i) {
+    for (int j = 0; j < GRID; ++j) {
+      establishConnections(i, j, grid);
+    }
+  }
+  sort(network.begin(), network.end());
+  network.erase(unique(network.begin(), network.end()), network.end());
+  return network;
+}
+
+void solve(Node** grid) {
+  
 }
 
 int main(int argc, char* argv[]) {
   // load data from file into grid
   Node** grid = parseData(argv[1]);
-  generateNetwork(grid);
-  print(grid);
+  vector<Node*> network = generateNetwork(grid);
+  print(network);
+  solve(grid);
   clean(grid);
 
   return 0;
