@@ -92,7 +92,7 @@ void print(vector<Node*> vec) {
   for (vector<Node*>::iterator i = vec.begin(); i != vec.end(); i++) {
     printf("%i: [%i] ", (**i).id, (**i).connections.size());
     for (vector<Node*>::iterator j = (**i).connections.begin(); j != (**i).connections.end(); j++) {
-      printf("%i, ", (**j).parent->id);
+      printf("%i, ", (**j).id);
     }
     printf("\n");
   }
@@ -151,7 +151,6 @@ void group(int i, int j, Node** grid, Node* parent) {
 
   for (int k = 0; k < 4; k++) {
     if (adjacent[k].n->colour == n->colour && adjacent[k].n->grouped == false) {
-      printf("%i %i %i\n", parent->colour, i, j);
       n->parent = parent;
       group(adjacent[k].i, adjacent[k].j, grid, parent);
     }
@@ -199,7 +198,7 @@ void establishConnections(int i, int j, Node** grid) {
   }
   
   for (int k = 0; k < 4; k++) {
-    if (adjacent[k].n->colour != n->colour) {
+    if (adjacent[k].n->colour != n->colour && adjacent[k].n->colour != 200) {
       n->parent->connections.push_back(adjacent[k].n->parent);
     }
   }
@@ -227,7 +226,6 @@ vector<Node*> generateNetwork(Node** grid) {
     }
   }
   sort(network.begin(), network.end());
-  network.erase(unique(network.begin(), network.end()), network.end());
   return network;
 }
 
