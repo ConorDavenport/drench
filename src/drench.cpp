@@ -204,8 +204,12 @@ void establishConnections(int i, int j, Node** grid) {
   }
 }
 
-bool comp(Node* a, Node* b) {
+bool compLessThan(Node* a, Node* b) {
   return a->id < b->id;
+}
+
+bool compEquals(Node* a, Node* b) {
+  return a->id == b->id;
 }
 
 // generateNetwork() iterates through the grid
@@ -230,8 +234,8 @@ vector<Node*> generateNetwork(Node** grid) {
     }
   }
   for (vector<Node*>::iterator i = network.begin(); i != network.end(); i++) {
-    sort((*i)->connections.begin(), (*i)->connections.end(), comp);
-    //conns.erase(unique(conns.begin(), conns.end(), node_equals), conns.end());
+    sort((*i)->connections.begin(), (*i)->connections.end(), compLessThan);
+    (*i)->connections.erase(unique((*i)->connections.begin(), (*i)->connections.end(), compEquals), (*i)->connections.end());
   }
   return network;
 }
