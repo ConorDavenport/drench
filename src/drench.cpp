@@ -204,22 +204,6 @@ void establishConnections(int i, int j, Node** grid) {
   }
 }
 
-void bubbleSort(vector<Node*>& vec) {
-  for (int i = 0; i < vec.size(); i++) {
-    for (int j = 0; j < vec.size()-1; j++) {
-      if (vec[j]->id > vec[j+1]->id) {
-        Node* temp = vec[j];
-        vec[j] = vec[j+1];
-        vec[j+1] = temp;
-      }
-    }
-  }
-  for (vector<Node*>::iterator i = vec.begin(); i != vec.end(); i++) {
-    printf("%i ", (*i)->id);
-  }
-  printf("\n");
-}
-
 bool comp(Node* a, Node* b) {
   return a->id < b->id;
 }
