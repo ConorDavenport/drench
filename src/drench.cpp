@@ -90,9 +90,9 @@ void print(vector<Node> vec) {
 
 void print(vector<Node*> vec) {
   for (vector<Node*>::iterator i = vec.begin(); i != vec.end(); i++) {
-    printf("%i: [%i] ", (**i).id, (**i).connections.size());
-    for (vector<Node*>::iterator j = (**i).connections.begin(); j != (**i).connections.end(); j++) {
-      printf("%i, ", (**j).id);
+    printf("%i (%i): [%i] ", (*i)->id, (*i)->colour, (*i)->connections.size());
+    for (vector<Node*>::iterator j = (*i)->connections.begin(); j != (*i)->connections.end(); j++) {
+      printf("%i, ", (*j)->id);
     }
     printf("\n");
   }
@@ -204,6 +204,26 @@ void establishConnections(int i, int j, Node** grid) {
   }
 }
 
+void bubbleSort(vector<Node*>& vec) {
+  for (int i = 0; i < vec.size(); i++) {
+    for (int j = 0; j < vec.size()-1; j++) {
+      if (vec[j]->id > vec[j+1]->id) {
+        Node* temp = vec[j];
+        vec[j] = vec[j+1];
+        vec[j+1] = temp;
+      }
+    }
+  }
+  for (vector<Node*>::iterator i = vec.begin(); i != vec.end(); i++) {
+    printf("%i ", (*i)->id);
+  }
+  printf("\n");
+}
+
+bool comp(Node* a, Node* b) {
+  return a->id < b->id;
+}
+
 // generateNetwork() iterates through the grid
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
@@ -225,7 +245,10 @@ vector<Node*> generateNetwork(Node** grid) {
       establishConnections(i, j, grid);
     }
   }
-  sort(network.begin(), network.end());
+  for (vector<Node*>::iterator i = network.begin(); i != network.end(); i++) {
+    sort((*i)->connections.begin(), (*i)->connections.end(), comp);
+    //conns.erase(unique(conns.begin(), conns.end(), node_equals), conns.end());
+  }
   return network;
 }
 
