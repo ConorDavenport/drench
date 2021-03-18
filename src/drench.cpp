@@ -249,7 +249,7 @@ bool compId(Node* a, Node* b) {
   return a->id > b->id;
 }
 
-void solve(vector<Node*> network) {
+void solve(vector<Node*>& network) {
   printf("\nsolve\n");
   // start in top right of grid
   Node* player = network[0];
