@@ -250,7 +250,6 @@ bool compId(Node* a, Node* b) {
 }
 
 void solve(vector<Node*>& network) {
-  printf("\nsolve\n");
   // start in top right of grid
   // change colour of player to that of the connection with most connections
   // add nextMove's connections to player's connections vector
