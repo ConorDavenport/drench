@@ -250,7 +250,7 @@ bool compId(Node* a, Node* b) {
 }
 
 void solve(vector<Node*>& network) {
-  if(network.size() != 1) {
+  if(network.size() == 1) {
     return;
   }
   // start in top right of grid
