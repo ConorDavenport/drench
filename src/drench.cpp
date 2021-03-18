@@ -259,17 +259,15 @@ void solve(vector<Node*>& network) {
   player->colour = nextMove->colour;
   player->connections.insert(player->connections.end(), nextMove->connections.begin(), nextMove->connections.end());
   
-  // clean player connections vector
-  sort(player->connections.begin(), player->connections.end(), compId);
-  player->connections.erase(unique(player->connections.begin(), player->connections.end()), player->connections.end());
-  player->connections.erase(find(player->connections.begin(), player->connections.end(), player));
-
   // update all nodes in network to point connect to player instead of nextMove
   for (vector<Node*>::iterator i = network.begin(); i != network.end(); i++) {
     replace((*i)->connections.begin(), (*i)->connections.end(), nextMove, player);
     sort((*i)->connections.begin(), (*i)->connections.end(), compId);
     (*i)->connections.erase(unique((*i)->connections.begin(), (*i)->connections.end()), (*i)->connections.end());
   }
+
+  // clean player connections vector
+  player->connections.erase(find(player->connections.begin(), player->connections.end(), player));
 
   network.erase(remove(network.begin(), network.end(), nextMove), network.end());
 }
@@ -279,8 +277,13 @@ int main(int argc, char* argv[]) {
   Node** grid = parseData(argv[1]);
   vector<Node*> network = generateNetwork(grid);
   print(network);
+  printf("\n");
   solve(network);
   print(network);
+  printf("\n");
+  solve(network);
+  print(network);
+  printf("\n");
   clean(grid);
 
   return 0;
