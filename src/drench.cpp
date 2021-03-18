@@ -260,6 +260,8 @@ void solve(vector<Node*>& network) {
   sort(player->connections.begin(), player->connections.end(), compNumConnections);
   Node* nextMove = player->connections[0];
   player->colour = nextMove->colour;
+  printf("%i ", nextMove->colour);
+  getchar();
   player->connections.insert(player->connections.end(), nextMove->connections.begin(), nextMove->connections.end());
   
   // update all nodes in network to point connect to player instead of nextMove
@@ -283,7 +285,6 @@ int main(int argc, char* argv[]) {
   vector<Node*> network = generateNetwork(grid);
   print(network);
   solve(network);
-  print(network);
   clean(grid);
 
   return 0;
