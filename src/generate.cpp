@@ -37,6 +37,10 @@ void generateUser(string fname) {
 
 
 int main(int argc, char* argv[]) {
+  if(argc < 3) {
+    return 0;
+  }
+
   srand(time(NULL));
 
   if(!string(argv[1]).compare("r")) {
