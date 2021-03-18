@@ -246,7 +246,10 @@ bool compNumConnections(Node* a, Node* b) {
 }
 
 void solve(vector<Node*> network) {
-  
+  printf("\nsolve\n");
+  // start in top right of grid
+  Node* player = network[0];
+  sort(player->connections.begin(), player->connections.end(), compNumConnections);
 }
 
 int main(int argc, char* argv[]) {
@@ -254,6 +257,7 @@ int main(int argc, char* argv[]) {
   Node** grid = parseData(argv[1]);
   vector<Node*> network = generateNetwork(grid);
   print(network);
+  solve(network);
   clean(grid);
 
   return 0;
