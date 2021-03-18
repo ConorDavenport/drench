@@ -252,16 +252,20 @@ bool compId(Node* a, Node* b) {
 void solve(vector<Node*>& network) {
   printf("\nsolve\n");
   // start in top right of grid
+  // change colour of player to that of the connection with most connections
+  // add nextMove's connections to player's connections vector
   Node* player = network[0];
   sort(player->connections.begin(), player->connections.end(), compNumConnections);
   Node* nextMove = player->connections[0];
   player->colour = nextMove->colour;
   player->connections.insert(player->connections.end(), nextMove->connections.begin(), nextMove->connections.end());
   
+  // clean player connections vector
   sort(player->connections.begin(), player->connections.end(), compId);
   player->connections.erase(unique(player->connections.begin(), player->connections.end()), player->connections.end());
   player->connections.erase(find(player->connections.begin(), player->connections.end(), player));
 
+  // update all nodes in network to point connect to player instead of nextMove
   for (vector<Node*>::iterator i = network.begin(); i != network.end(); i++) {
     replace((*i)->connections.begin(), (*i)->connections.end(), nextMove, player);
     sort((*i)->connections.begin(), (*i)->connections.end(), compId);
