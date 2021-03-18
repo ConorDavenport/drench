@@ -250,6 +250,10 @@ void solve(vector<Node*> network) {
   // start in top right of grid
   Node* player = network[0];
   sort(player->connections.begin(), player->connections.end(), compNumConnections);
+  Node* nextMove = player->connections[0];
+  player->colour = nextMove->colour;
+  player->connections.insert(player->connections.end(), nextMove->connections.begin(), nextMove->connections.end());
+  
 }
 
 int main(int argc, char* argv[]) {
@@ -258,6 +262,7 @@ int main(int argc, char* argv[]) {
   vector<Node*> network = generateNetwork(grid);
   print(network);
   solve(network);
+  print(network);
   clean(grid);
 
   return 0;
