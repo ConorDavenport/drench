@@ -260,6 +260,7 @@ void solve(vector<Node*> network) {
   
   sort(player->connections.begin(), player->connections.end(), compId);
   player->connections.erase(unique(player->connections.begin(), player->connections.end()), player->connections.end());
+  player->connections.erase(find(player->connections.begin(), player->connections.end(), player));
 }
 
 int main(int argc, char* argv[]) {
