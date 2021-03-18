@@ -261,6 +261,14 @@ void solve(vector<Node*> network) {
   sort(player->connections.begin(), player->connections.end(), compId);
   player->connections.erase(unique(player->connections.begin(), player->connections.end()), player->connections.end());
   player->connections.erase(find(player->connections.begin(), player->connections.end(), player));
+
+  for (vector<Node*>::iterator i = network.begin(); i != network.end(); i++) {
+    replace((*i)->connections.begin(), (*i)->connections.end(), nextMove, player);
+    sort((*i)->connections.begin(), (*i)->connections.end(), compId);
+    (*i)->connections.erase(unique((*i)->connections.begin(), (*i)->connections.end()), (*i)->connections.end());
+  }
+
+  network.erase(remove(network.begin(), network.end(), nextMove), network.end());
 }
 
 int main(int argc, char* argv[]) {
