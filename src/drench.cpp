@@ -250,6 +250,9 @@ bool compId(Node* a, Node* b) {
 }
 
 void solve(vector<Node*>& network) {
+  if(network.size() != 1) {
+    return;
+  }
   // start in top right of grid
   // change colour of player to that of the connection with most connections
   // add nextMove's connections to player's connections vector
@@ -270,6 +273,8 @@ void solve(vector<Node*>& network) {
   player->connections.erase(find(player->connections.begin(), player->connections.end(), player));
 
   network.erase(remove(network.begin(), network.end(), nextMove), network.end());
+
+  solve(network);
 }
 
 int main(int argc, char* argv[]) {
