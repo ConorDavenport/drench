@@ -245,6 +245,10 @@ bool compNumConnections(Node* a, Node* b) {
   return a->connections.size()> b->connections.size();
 }
 
+bool compId(Node* a, Node* b) {
+  return a->id > b->id;
+}
+
 void solve(vector<Node*> network) {
   printf("\nsolve\n");
   // start in top right of grid
@@ -254,6 +258,8 @@ void solve(vector<Node*> network) {
   player->colour = nextMove->colour;
   player->connections.insert(player->connections.end(), nextMove->connections.begin(), nextMove->connections.end());
   
+  sort(player->connections.begin(), player->connections.end(), compId);
+  player->connections.erase(unique(player->connections.begin(), player->connections.end()), player->connections.end());
 }
 
 int main(int argc, char* argv[]) {
