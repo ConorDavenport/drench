@@ -31,6 +31,7 @@ class Node {
     Node() { grouped = false; isParent = false; };
     Node(int c, int id);
     Node(bool g, int c, int id);
+    bool operator== (const Node* other ) const { return id == other->id; };
 };
 
 Node::Node(int c, int id) {
@@ -240,7 +241,11 @@ vector<Node*> generateNetwork(Node** grid) {
   return network;
 }
 
-void solve(Node** grid) {
+bool compNumConnections(Node* a, Node* b) {
+  return a->connections.size()> b->connections.size();
+}
+
+void solve(vector<Node*> network) {
   
 }
 
@@ -249,7 +254,6 @@ int main(int argc, char* argv[]) {
   Node** grid = parseData(argv[1]);
   vector<Node*> network = generateNetwork(grid);
   print(network);
-  solve(grid);
   clean(grid);
 
   return 0;
