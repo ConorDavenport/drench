@@ -33,3 +33,16 @@ player object are now included in the player object.
 
 The player must fill the entire grid with a single colour in fewer than 30
 moves.
+
+## Solve functions
+The two solve functions work in slightly different ways.
+
+### Solve()
+`solve()` takes all nodes connected to player and determines which node is the
+largest by number of connections. It then changes player colour to the colour
+of that node and merges the two.
+
+### quickSolve()
+`quickSolve()` takes all nodes connected to player and determines out of those
+which colour is most common. It then changes player to that colour and all
+connected nodes of that colour are merged into player.
