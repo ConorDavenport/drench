@@ -249,6 +249,10 @@ bool compId(Node* a, Node* b) {
   return a->id > b->id;
 }
 
+bool compColour(Node* a, Node* b) {
+  return a->colour > b->colour;
+}
+
 void solve(vector<Node*>& network) {
   if(network.size() == 1) {
     return;
