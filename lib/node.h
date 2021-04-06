@@ -1,3 +1,6 @@
+#ifndef NODE_H
+#define NODE_H
+
 #include <vector>
 
 class Node {
@@ -23,3 +26,4 @@ class Node {
     Node(bool g, int c, int id);
     bool operator== (const Node* other ) const { return id == other->id; };
 };
+#endif
