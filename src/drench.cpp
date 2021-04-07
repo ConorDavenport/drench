@@ -209,7 +209,6 @@ void solve(vector<Node*>& network) {
   Node* nextMove = player->connections[0];
   player->colour = nextMove->colour;
   printf("%i ", nextMove->colour);
-  getchar();
   player->connections.insert(player->connections.end(), nextMove->connections.begin(), nextMove->connections.end());
   
   // update all nodes in network to point connect to player instead of nextMove
