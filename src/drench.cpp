@@ -168,14 +168,6 @@ void establishConnections(int i, int j, Node** grid) {
   }
 }
 
-bool compLessThan(Node* a, Node* b) {
-  return a->id < b->id;
-}
-
-bool compEquals(Node* a, Node* b) {
-  return a->id == b->id;
-}
-
 // generateNetwork() iterates through the grid
 // and finds all adjacent cells that are the same
 // colour and groups them together into one node
@@ -202,18 +194,6 @@ vector<Node*> generateNetwork(Node** grid) {
     (*i)->connections.erase(unique((*i)->connections.begin(), (*i)->connections.end(), compEquals), (*i)->connections.end());
   }
   return network;
-}
-
-bool compNumConnections(Node* a, Node* b) {
-  return a->connections.size()> b->connections.size();
-}
-
-bool compId(Node* a, Node* b) {
-  return a->id > b->id;
-}
-
-bool compColour(Node* a, Node* b) {
-  return a->colour > b->colour;
 }
 
 void solve(vector<Node*>& network) {
