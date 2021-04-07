@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include "../lib/node.h"
+#include "../lib/comparisons.h"
 
 using namespace std;
 
