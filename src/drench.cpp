@@ -268,6 +268,7 @@ int main(int argc, char* argv[]) {
   Node** grid = parseData(argv[1]);
   vector<Node*> network = generateNetwork(grid);
   print(network);
+  solve(network);
   quickSolve(network);
   clean(grid);
 
