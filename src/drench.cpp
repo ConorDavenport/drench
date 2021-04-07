@@ -238,12 +238,14 @@ void quickSolve(vector<Node*>& network) {
   printf("%i\n", nextMove->colour);
 
   vector<Node*> nextMovesVec;
+  vector<Node*> newConnections;
   for(vector<Node*>::iterator i = player->connections.begin(); i != player->connections.end(); i++) {
     if((*i)->colour == nextMove->colour) {
       nextMovesVec.push_back(*i);
-      player->connections.insert(player->connections.end(), (*i)->connections.begin(), (*i)->connections.end());
+      newConnections.insert(newConnections.end(), (*i)->connections.begin(), (*i)->connections.end());
     }
   }
+  player->connections = newConnections;
 
   // update all nodes that point to any node in nextMovesVec to point to player
   for(vector<Node*>::iterator i = network.begin(); i != network.end(); i++) {
@@ -268,7 +270,6 @@ int main(int argc, char* argv[]) {
   Node** grid = parseData(argv[1]);
   vector<Node*> network = generateNetwork(grid);
   print(network);
-  solve(network);
   quickSolve(network);
   clean(grid);
 
