@@ -1,3 +1,6 @@
+#ifndef COMPARISONS_H
+#define COMPARISONS_H
+
 #include "node.h"
 #include "colours.h"
 
@@ -24,3 +27,5 @@ bool compColour(Node* a, Node* b) {
 bool compColourStructFrequency(colour& lhs, colour& rhs) {
   return lhs.frequency > rhs.frequency;
 }
+
+#endif
