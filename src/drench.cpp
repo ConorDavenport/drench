@@ -11,6 +11,7 @@
 #include "../lib/colours.h"
 #include "../lib/solve.h"
 #include "../lib/quickSolve.h"
+#include "../lib/recursiveSolve.h"
 
 using namespace std;
 
