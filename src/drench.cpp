@@ -204,7 +204,7 @@ int main(int argc, char* argv[]) {
   // load data from file into grid
   Node** grid = parseData(argv[1]);
   vector<Node*> network = generateNetwork(grid);
-  quickSolve(network);
+  recursiveSolve(network);
   clean(grid);
   return 0;
 }
