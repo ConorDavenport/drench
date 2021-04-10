@@ -3,16 +3,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "../lib/defines.h"
 
-#define SIZE 14
+#define GRID 14
 
 using namespace std;
 
 void generateRand(string fname) {
   ofstream file("../examples/" + fname + ".csv");
 
-  for(int i = 0; i < SIZE; i++) {
-    for(int j = 0; j < SIZE; j++) {
+  for(int i = 0; i < GRID; i++) {
+    for(int j = 0; j < GRID; j++) {
       int num = rand() % 6;
       file << num << ",";
     }
@@ -24,8 +25,8 @@ void generateRand(string fname) {
 void generateUser(string fname) {
   ofstream file("../examples/" + fname + ".csv");
 
-  for(int i = 0; i < SIZE; i++) {
-    for(int j = 0; j < SIZE; j++) {
+  for(int i = 0; i < GRID; i++) {
+    for(int j = 0; j < GRID; j++) {
       int num;
       cin >> num;
       file << num << ",";

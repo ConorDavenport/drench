@@ -5,12 +5,15 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include "../lib/defines.h"
 #include "../lib/node.h"
 #include "../lib/comparisons.h"
+#include "../lib/colours.h"
+#include "../lib/solve.h"
+#include "../lib/quickSolve.h"
+#include "../lib/recursiveSolve.h"
 
 using namespace std;
-
-#define GRID 14
 
 // get drench example game
 // load game into grid, return 2d array
@@ -197,80 +200,11 @@ vector<Node*> generateNetwork(Node** grid) {
   return network;
 }
 
-void solve(vector<Node*>& network) {
-  if(network.size() == 1) {
-    return;
-  }
-  // start in top right of grid
-  // change colour of player to that of the connection with most connections
-  // add nextMove's connections to player's connections vector
-  Node* player = network[0];
-  sort(player->connections.begin(), player->connections.end(), compNumConnections);
-  Node* nextMove = player->connections[0];
-  player->colour = nextMove->colour;
-  printf("%i ", nextMove->colour);
-  getchar();
-  player->connections.insert(player->connections.end(), nextMove->connections.begin(), nextMove->connections.end());
-  
-  // update all nodes in network to point connect to player instead of nextMove
-  for (vector<Node*>::iterator i = network.begin(); i != network.end(); i++) {
-    replace((*i)->connections.begin(), (*i)->connections.end(), nextMove, player);
-    sort((*i)->connections.begin(), (*i)->connections.end(), compId);
-    (*i)->connections.erase(unique((*i)->connections.begin(), (*i)->connections.end()), (*i)->connections.end());
-  }
-
-  // clean player connections vector
-  player->connections.erase(find(player->connections.begin(), player->connections.end(), player));
-
-  network.erase(remove(network.begin(), network.end(), nextMove), network.end());
-
-  solve(network);
-}
-
-void quickSolve(vector<Node*>& network) {
-  if(network.size() == 1) {
-    return;
-  }
-  
-  Node* player = network[0];
-  sort(player->connections.begin(), player->connections.end(), compColour);
-  Node* nextMove = player->connections[0];
-  player->colour = nextMove->colour;
-  printf("%i\n", nextMove->colour);
-
-  vector<Node*> nextMovesVec;
-  for(vector<Node*>::iterator i = player->connections.begin(); i != player->connections.end(); i++) {
-    if((*i)->colour == nextMove->colour) {
-      nextMovesVec.push_back(*i);
-      player->connections.insert(player->connections.end(), (*i)->connections.begin(), (*i)->connections.end());
-    }
-  }
-
-  // update all nodes that point to any node in nextMovesVec to point to player
-  for(vector<Node*>::iterator i = network.begin(); i != network.end(); i++) {
-    for(vector<Node*>::iterator j = nextMovesVec.begin(); j != nextMovesVec.end(); j++) {
-      replace((*i)->connections.begin(), (*i)->connections.end(), *j, player);
-    }
-    sort((*i)->connections.begin(), (*i)->connections.end(), compId);
-    (*i)->connections.erase(unique((*i)->connections.begin(), (*i)->connections.end()), (*i)->connections.end());
-  }
-  
-  player->connections.erase(find(player->connections.begin(), player->connections.end(), player));
-
-  for(vector<Node*>::iterator i = nextMovesVec.begin(); i != nextMovesVec.end(); i++) {
-    network.erase(remove(network.begin(), network.end(), *i), network.end());
-  }
-  
-  quickSolve(network);
-}
-
 int main(int argc, char* argv[]) {
   // load data from file into grid
   Node** grid = parseData(argv[1]);
   vector<Node*> network = generateNetwork(grid);
-  print(network);
   quickSolve(network);
   clean(grid);
-
   return 0;
 }
