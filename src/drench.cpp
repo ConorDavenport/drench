@@ -51,14 +51,14 @@ void print(Node** grid) {
 
 void print(vector<Node> vec) {
   for (vector<Node>::iterator i = vec.begin(); i != vec.end(); i++) {
-    printf("%i: %i", (*i).id, (*i).connections.size());
+    printf("%i: %i", (*i).id, (int)(*i).connections.size());
     printf("\n");
   }
 }
 
 void print(vector<Node*> vec) {
   for (vector<Node*>::iterator i = vec.begin(); i != vec.end(); i++) {
-    printf("%i (%i): [%i] ", (*i)->id, (*i)->colour, (*i)->connections.size());
+    printf("%i (%i): [%i] ", (*i)->id, (*i)->colour, (int)(*i)->connections.size());
     for (vector<Node*>::iterator j = (*i)->connections.begin(); j != (*i)->connections.end(); j++) {
       printf("%i, ", (*j)->id);
     }
@@ -204,7 +204,7 @@ int main(int argc, char* argv[]) {
   // load data from file into grid
   Node** grid = parseData(argv[1]);
   vector<Node*> network = generateNetwork(grid);
-  quickSolve(network);
+  recursiveSolve(network);
   clean(grid);
   return 0;
 }
