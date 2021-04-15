@@ -12,6 +12,7 @@
 #include "../lib/solve.h"
 #include "../lib/quickSolve.h"
 #include "../lib/recursiveSolve.h"
+#include "../lib/print.h"
 
 using namespace std;
 
@@ -38,32 +39,6 @@ Node** parseData(string fileName) {
   }
   file.close();
   return grid;
-}
-
-void print(Node** grid) {
-  for (int i = 0; i < GRID; i++) {
-    for (int j = 0; j < GRID; j++) {
-      printf("%i", grid[i][j].parent->id);
-    }
-    printf("\n");
-  }
-}
-
-void print(vector<Node> vec) {
-  for (vector<Node>::iterator i = vec.begin(); i != vec.end(); i++) {
-    printf("%i: %i", (*i).id, (int)(*i).connections.size());
-    printf("\n");
-  }
-}
-
-void print(vector<Node*> vec) {
-  for (vector<Node*>::iterator i = vec.begin(); i != vec.end(); i++) {
-    printf("%i (%i): [%i] ", (*i)->id, (*i)->colour, (int)(*i)->connections.size());
-    for (vector<Node*>::iterator j = (*i)->connections.begin(); j != (*i)->connections.end(); j++) {
-      printf("%i, ", (*j)->id);
-    }
-    printf("\n");
-  }
 }
 
 void clean(Node** grid) {
